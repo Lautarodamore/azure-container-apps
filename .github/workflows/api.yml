@@ -49,6 +49,6 @@ jobs:
         with:
           inlineScript: |
             echo "Installing containerapp extension"
-            az extension add --source https://workerappscliextension.blob.core.windows.net/azure-cli-extension/containerapp-0.2.0-py2.py3-none-any.whl --yes
+            az extension add --name containerapp --yes
             echo "Starting Deploying"
-            az containerapp update --name kotlinapi --resource-group test-azure -i kotlinapi.azurecr.io/kotlinapi:${{ github.sha }} --registry-login-server kotlinapi.azurecr.io --registry-username  ${{ secrets.REGISTRY_USERNAME }} --registry-password ${{ secrets.REGISTRY_PASSWORD }} --debug
+            az containerapp update --name kotlinapi --resource-group test-azure --image kotlinapi.azurecr.io/kotlinapi:${{ github.sha }} --set-env-vars "PORT=80"
