@@ -31,3 +31,21 @@ jobs:
           push: true
           tags: kotlinapi.azurecr.io/kotlinapi:${{ github.sha }}
           file: ./Dockerfile
+  deploy:
+    runs-on: ubuntu-latest
+    needs: build
+
+    steps:
+      - name: Azure Login
+        uses: azure/login@v1
+        with:
+          creds: ${{ secrets.AZURE_CREDENTIALS }}
+
+      - name: Deploy to containerapp
+        uses: azure/CLI@v1
+        with:
+          inlineScript: |
+            echo "Installing containerapp extension"
+            az extension add containerapp --yes
+            echo "Starting Deploying"
+            az containerapp update -n kotlinapi -g container-app-example -i kotlinapi.azurecr.io/kotlinapi:${{ github.sha }} --registry-login-server kotlinapi.azurecr.io --registry-username  ${{ secrets.REGISTRY_USERNAME }} --registry-password ${{ secrets.REGISTRY_PASSWORD }} --set-env-vars "PORT=80" --debug
