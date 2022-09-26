@@ -46,6 +46,6 @@ jobs:
         with:
           inlineScript: |
             echo "Installing containerapp extension"
-            az extension add containerapp --yes
+            az extension add --name containerapp --yes
             echo "Starting Deploying"
             az containerapp update -n kotlinapi -g container-app-example -i kotlinapi.azurecr.io/kotlinapi:${{ github.sha }} --registry-login-server kotlinapi.azurecr.io --registry-username  ${{ secrets.REGISTRY_USERNAME }} --registry-password ${{ secrets.REGISTRY_PASSWORD }} --set-env-vars "PORT=80" --debug
