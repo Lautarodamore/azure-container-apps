@@ -26,7 +26,12 @@ class HttpServer(private val port: Int) {
     }
 
     private fun registerRoutes() {
+        app.get("/", ::helloWorldHandler)
         app.get("/hello", ::helloHandler)
+    }
+
+    private fun helloWorldHandler(ctx: Context) {
+        ctx.html("<h1>Hello World!</h1>")
     }
 
     private fun helloHandler(ctx: Context) {
