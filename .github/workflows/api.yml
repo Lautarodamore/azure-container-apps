@@ -48,4 +48,4 @@ jobs:
             echo "Installing containerapp extension"
             az extension add --name containerapp --yes
             echo "Starting Deploying"
-            az containerapp update -n kotlinapi -g container-app-example -i kotlinapi.azurecr.io/kotlinapi:${{ github.sha }} --registry-login-server kotlinapi.azurecr.io --registry-username  ${{ secrets.REGISTRY_USERNAME }} --registry-password ${{ secrets.REGISTRY_PASSWORD }} --set-env-vars "PORT=80" --debug
+            az containerapp update -n kotlinapi -g container-app-example -i kotlinapi.azurecr.io/kotlinapi:${{ github.sha }} --set-env-vars "PORT=80" --debug
